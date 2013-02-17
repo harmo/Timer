@@ -1,0 +1,1 @@
+oM.show('config');

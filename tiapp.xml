@@ -9,7 +9,7 @@
     </deployment-targets>
     <sdk-version>3.0.0.GA</sdk-version>
     <guid>ac28cfd6-aae2-4ebb-a1b6-a67c9ede8988</guid>
-<description>No description provided</description>
+<description>Multi tasks timers</description>
     <!-- These values are edited/maintained by TideSDK Developer -->
 <id>Timer</id>
 <name>Timer</name>

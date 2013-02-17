@@ -38,7 +38,7 @@ function Timer(){
 		sHtml = '';
 		aTimers = oD.select('projects', ['id', 'name', 'time', 'total_time']);
 		if(aTimers == 'empty'){
-			sHtml = 'No projects found, please add one with tab "Add project".';
+			sHtml = 'No projects found, please add one with tab "Projects".';
 		}
 		else {
 			for(project in aTimers){
