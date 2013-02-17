@@ -62,16 +62,13 @@ $(document).ready(function(){
 	// Simulate the click on default page, for display it
 	$('#timer').trigger('click');
 
-	// Construct the tray menu
+	// Construct the tray and dock menu
 	var Tray = Ti.UI.addTray('app://icon-timer.png');
 	var Menu = Ti.UI.createMenu();
 	item1 = Ti.UI.createMenuItem('Exit', oP.exit, 'app://img/off.png');
 	item2 = Ti.UI.createMenuItem('Updates', oP.checkUpdates, 'app://img/update.png');
 	item3 = Ti.UI.createMenuItem('Maximize', oP.maximize, 'app://img/maximize.png');
 	item4 = Ti.UI.createMenuItem('Minimize', oP.minimize, 'app://img/minimize.png');
-	/*item3.addItem('Run...', function() {
-		alert('run!');
-	});*/
 	Menu.appendItem(item1);
 	Menu.appendItem(item2);
 	Menu.appendItem(item3);
@@ -98,11 +95,11 @@ function Page(){
 	}
 
 	this.maximize = function(){
-		return false;
+		Ti.UI.currentWindow.maximize();
 	}
 
 	this.minimize = function(){
-		return false;
+		Ti.UI.currentWindow.minimize();
 	}
 
 	this.exit = function(){
