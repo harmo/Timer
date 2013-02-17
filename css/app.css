@@ -1,0 +1,87 @@
+body {
+	background-color: #334445;
+	color: #CFCFCF;
+}
+
+h1 {
+	color: #000000;
+}
+
+.dNone {
+	display: none;
+}
+.fLeft {
+	float: left;
+}
+.fRight {
+	float: right;
+}
+.clear: {
+	clear: both;
+}
+.tCenter {
+	text-align: center;
+}
+
+.wrapperNavbar {
+	padding: 0;
+	background-color: #1B1B1B;
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222), to(#111));
+	background-repeat: repeat-x;
+	border-color: #252525;
+}
+
+#content {
+	color: #000000;
+}
+
+.projectLine {
+	line-height: 25px;
+	vertical-align: middle;
+	margin-bottom: 25px;
+}
+
+.projectLineForDelete {
+	line-height: 25px;
+	vertical-align: middle;
+	margin-bottom: 5px;
+}
+
+.projectLine .btn {
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.projectLineForDelete .btn {
+	height: 20px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+
+.projectLine .label, .projectLineForDelete .label {
+	line-height: 25px;
+	vertical-align: middle;
+	margin-bottom: 5px;
+	color: #000000;
+	font-weight: bold;
+	padding-right: 5px;
+}
+
+.projectLine .stopStart{
+	height: 20px;
+}
+
+.projectLine .reset {
+	height: 20px;
+	margin-left: 5px;
+}
+
+.projectLine .timer {
+	line-height: 24px;
+	vertical-align: middle;
+}
+
+.addProjectForm #name {
+	height: 40px;
+	width: 350px;
+}
