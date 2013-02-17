@@ -33,8 +33,7 @@ $(document).ready(function(){
 	// Listener on nav links
 	$('.link').click(function(){
 		if($(this).attr('id') == 'exit'){
-			var window = Ti.UI.currentWindow;
-			window.close();
+			oP.exit();
 		}
 		else {
 			oP.add($(this).attr('id'));
@@ -62,6 +61,23 @@ $(document).ready(function(){
 
 	// Simulate the click on default page, for display it
 	$('#timer').trigger('click');
+
+	// Construct the tray menu
+	var Tray = Ti.UI.addTray('app://icon-timer.png');
+	var Menu = Ti.UI.createMenu();
+	item1 = Ti.UI.createMenuItem('Exit', oP.exit, 'app://img/off.png');
+	item2 = Ti.UI.createMenuItem('Updates', oP.checkUpdates, 'app://img/update.png');
+	item3 = Ti.UI.createMenuItem('Maximize', oP.maximize, 'app://img/maximize.png');
+	item4 = Ti.UI.createMenuItem('Minimize', oP.minimize, 'app://img/minimize.png');
+	/*item3.addItem('Run...', function() {
+		alert('run!');
+	});*/
+	Menu.appendItem(item1);
+	Menu.appendItem(item2);
+	Menu.appendItem(item3);
+	Menu.appendItem(item4);
+	Tray.setMenu(Menu);
+	Ti.UI.setDockMenu(Menu);
 });
 
 /**
@@ -79,6 +95,22 @@ function Page(){
 		if(oFile.exists){
 			$.getScript('js/'+page+'.js');
 		}
+	}
+
+	this.maximize = function(){
+		return false;
+	}
+
+	this.minimize = function(){
+		return false;
+	}
+
+	this.exit = function(){
+		Ti.UI.currentWindow.close();
+	}
+
+	this.checkUpdates = function(){
+		return false;
 	}
 }
 
