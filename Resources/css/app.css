@@ -85,3 +85,22 @@ h1 {
 	height: 40px;
 	width: 350px;
 }
+
+#configForm .label{
+	line-height: 25px;
+	vertical-align: middle;
+	margin-bottom: 5px;
+	margin-right: 10px;
+}
+
+#configForm input, #configForm button{
+	line-height: 26px;
+	height: 29px;
+	vertical-align: middle;
+	margin-bottom: 5px;
+	background-image: none;
+}
+
+.progress {
+	cursor: pointer;
+}
