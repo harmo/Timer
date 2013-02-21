@@ -2,6 +2,7 @@ var appDir = Ti.Filesystem.getResourcesDirectory();
 var oM = new Message();
 var oD = new Database('timer', true);
 var oP = new Page();
+var uT = new Utils();
 
 $(document).ready(function(){
 
@@ -22,10 +23,21 @@ $(document).ready(function(){
 			'timestamp INTEGER NOT NULL',
 			'action TEXT DEFAULT NULL',
 			'time INTEGER DEFAULT NULL'
+		],
+		'config': [
+			'type TEXT NOT NULL',
+			'width INTEGER NOT NULL',
+			'max_width INTEGER NOT NULL',
+			'height INTEGER NOT NULL',
+			'max_height INTEGER NOT NULL',
+			'bg_color TEXT NOT NULL'
 		]
 	};
 	// Initialize the database 
 	oD.init(aQueries);
+
+	// Initialize Config
+	oD.initConfig();
 
 	// Add the default page
 	oP.add('timer');
@@ -46,16 +58,15 @@ $(document).ready(function(){
 	$(document).mousemove(function(event){
 	    if (!dragging)
 	        return;
-
 	    Ti.UI.currentWindow.setX(Ti.UI.currentWindow.getX() + event.clientX - xstart);
 	    Ti.UI.currentWindow.setY(Ti.UI.currentWindow.getY() + event.clientY - ystart);
 	});
-	$(document).mousedown(function(event){
+	$('.navbar').mousedown(function(event){
 	    dragging = true;
 	    xstart = event.clientX;
 	    ystart = event.clientY;
 	});
-	$(document).mouseup(function(){
+	$('.navbar').mouseup(function(){
 	    dragging = false;
 	});
 
@@ -139,5 +150,44 @@ function Message(){
 	 */
 	this.add = function(message){
 		$('#message').append(message+'<br />');
+	}
+}
+
+/**
+ * Utils
+ */
+function Utils(){
+
+	/**
+	 * Function for get hexadecimal value from rgb one
+	 * @param  {Int} r The red rgb color value
+	 * @param  {Int} g The green rgb color value
+	 * @param  {Int} b The blue rgb color value
+	 * @return {String}   The hexadecimal color value
+	 */
+	this.hexFromRGB = function(r, g, b){
+		var hex = [
+			r.toString(16),
+			g.toString(16),
+			b.toString(16)
+		];
+		$.each(hex, function(nr, val){
+			if (val.length == 1) {
+				hex[nr] = '0' + val;
+			}
+		});
+		return hex.join('').toUpperCase();
+	}
+
+	/**
+	 * Function for get separated rgb colors from hexadecimal one
+	 * @param  {String} rgb the rgb color value, like rgb(00, 00, 00)	
+	 * @return {array}  like {r: 00, g: 00, b: 00}
+	 */
+	this.arrayFromRgb = function(rgb){
+		rgb = rgb.replace('rgb(', '');
+		rgb = rgb.replace(')', '');
+		aRgb = rgb.split(',');
+		return {r: aRgb[0], g: aRgb[1], b: aRgb[2]};
 	}
 }

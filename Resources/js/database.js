@@ -141,7 +141,7 @@ function Database(dbFile, debug){
 			where += field + '=' + aWhere[field] + (i == Object.keys(aWhere).length ? '' : ' AND ');
 			i ++;
 		}
-		query = 'UPDATE '+table+' SET '+set+' WHERE '+where;
+		query = 'UPDATE '+table+' SET '+set+' WHERE '+where+';';
 		oD.open();
 		oD.exec(query);
 		oD.close();
@@ -231,6 +231,36 @@ function Database(dbFile, debug){
 				oD.close();
 			}
 		}
+	}
+
+	/**
+	 * Initialize the application configurations
+	 * Insert default config if not exists
+	 * Set registered config to application instead
+	 * @return {void} 
+	 */
+	this.initConfig = function(){
+		oD.open();
+		config = oD.exec('SELECT * FROM config');
+		win = Ti.UI.getMainWindow();
+		if(config.rowCount() == 0){
+			// Config is not in db
+			H = win.getHeight();
+			maxH = win.getMaxHeight();
+			W = win.getWidth();
+			maxW = win.getMaxWidth();
+			bg = $('body').css('background-color');
+			rgb = uT.arrayFromRgb(bg);
+			hex = uT.hexFromRGB(rgb.r, rgb.g, rgb.b);
+			oD.insert('config', ['global', H, maxH, W, maxW, '#'+hex]);
+		}
+		else {
+			// Config already in db, apply it to application
+			win.setSize(config.fieldByName('width'), config.fieldByName('height'));
+			$('body').css('background-color', config.fieldByName('bg_color'));
+		}
+		config.close();
+		oD.close();
 	}
 
 	/**
