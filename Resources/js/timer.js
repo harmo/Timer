@@ -67,7 +67,7 @@ function Timer(){
 		idProject = parseInt(idProject);
 		oT.stopOthers();
 		oT.start(idProject);
-		now = new Date().getTime();
+		now = Math.round(new Date().getTime()/1000.0)
 		oD.insert('statistics', [idProject, now, 'start', oT.timer[idProject].seconds]);
 	}
 
@@ -121,7 +121,7 @@ function Timer(){
 		if(oT.timer[idProject].seconds > 0){
 			totalTime = aTimers[project]['total_time'] + oT.timer[idProject].seconds;
 			oD.update('projects', {'time': 0, 'total_time': totalTime}, {'id': idProject});
-			now = new Date().getTime();
+			now = Math.round(new Date().getTime()/1000.0)
 			oD.insert('statistics', [idProject, now, 'reset', oT.timer[idProject].seconds]);
 			$('#'+idProject).find('.timer').html('00 : 00 : 00');
 			oM.show('<p class="text-success">Project '+oT.timer[idProject].name+' Successfully reset.</p>');
@@ -137,7 +137,7 @@ function Timer(){
 	 */
 	this.registerSeconds = function(idProject, seconds){
 		oD.update('projects', {'time': seconds}, {'id': idProject});
-		now = new Date().getTime();
+		now = Math.round(new Date().getTime()/1000.0)
 		oD.insert('statistics', [idProject, now, 'stop', seconds]);
 	}
 

@@ -27,10 +27,9 @@ function Project(){
 		sHtml = '';
 		name = $('#name').val();
 		if(name != ''){
-			now = new Date().getTime();
+			now = Math.round(new Date().getTime()/1000.0)
 			if(oD.insert('projects', ['NULL', name, 0, 0, now])){
 				aProject = oPr.displayProjects();
-				now = new Date().getTime();
 				oD.insert('statistics', [aProject.id, now, 'addProject', '0']);
 				$('#content').html(oPr.displayForm() + aProject.sHtml);
 			}
@@ -49,7 +48,7 @@ function Project(){
 	this.deleteOne = function(projectId){
 		projectId = parseInt(projectId);
 		oD.deleteRow('projects', {'id': projectId});
-		now = new Date().getTime();
+		now = Math.round(new Date().getTime()/1000.0)
 		oD.insert('statistics', [projectId, now, 'deleteProject', '0']);
 		$('#'+projectId).fadeOut('fast');
 	}
