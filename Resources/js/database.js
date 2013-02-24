@@ -89,7 +89,7 @@ function Database(dbFile, debug){
 			}
 		}
 		if(aErrors.length != 0){
-			console.log(aErrors);
+			//console.log(aErrors);
 			return aErrors;
 		}
 		else {
