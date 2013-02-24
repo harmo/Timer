@@ -1,5 +1,5 @@
 // Instanciate the Project object nd initialize it
-oPr = typeof(oPr) == 'undefined' ? new Project() : oPr;
+var oPr = typeof(oPr) == 'undefined' ? new Project() : oPr;
 oPr.init();
 
 // Listener on add project button
@@ -41,15 +41,15 @@ function Project(){
 	}
 
 	/**
-	 * Delete a project
+	 * Delete a project with all its statistics
 	 * @param  {Int} projectId The project ID
 	 * @return {void} 
 	 */
 	this.deleteOne = function(projectId){
 		projectId = parseInt(projectId);
 		oD.deleteRow('projects', {'id': projectId});
-		now = Math.round(new Date().getTime()/1000.0)
-		oD.insert('statistics', [projectId, now, 'deleteProject', '0']);
+		oD.deleteRow('statistics', {'id_project': projectId});
+		now = Math.round(new Date().getTime()/1000.0);
 		$('#'+projectId).fadeOut('fast');
 	}
 
