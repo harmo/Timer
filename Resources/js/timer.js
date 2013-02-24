@@ -1,5 +1,5 @@
 // Instanciate the Timer object
-oT = typeof(oT) == 'undefined' ? new Timer() : oT;
+var oT = typeof(oT) == 'undefined' ? new Timer() : oT;
 oT.init();
 
 // Listener on Start / Stop button
@@ -44,7 +44,7 @@ function Timer(){
 			for(project in aTimers){
 				sHtml += '<div class="projectLine" id="'+aTimers[project].id+'">'+"\n"+
 	       				'<a class="stopStart btn btn-success fLeft off" href="#"><i class="icon-play"></i></a>'+"\n"+
-	        			'<code class="timer fLeft alert-info">'+oT.getTimer(aTimers[project]['time'])+'</code>'+"\n"+
+	        			'<code class="timer fLeft alert-info">'+uT.getTimer(aTimers[project]['time'])+'</code>'+"\n"+
 	       				'<a class="reset btn btn-danger fLeft" href="#"><i class="icon-fire"></i></a>'+"\n"+
 	        			'<span class="label">'+aTimers[project].name+'</span>'+"\n"+
 	        			'<div class="clear"></div>'+"\n"+
@@ -67,7 +67,7 @@ function Timer(){
 		idProject = parseInt(idProject);
 		oT.stopOthers();
 		oT.start(idProject);
-		now = new Date().getTime();
+		now = Math.round(new Date().getTime()/1000.0);
 		oD.insert('statistics', [idProject, now, 'start', oT.timer[idProject].seconds]);
 	}
 
@@ -121,7 +121,7 @@ function Timer(){
 		if(oT.timer[idProject].seconds > 0){
 			totalTime = aTimers[project]['total_time'] + oT.timer[idProject].seconds;
 			oD.update('projects', {'time': 0, 'total_time': totalTime}, {'id': idProject});
-			now = new Date().getTime();
+			now = Math.round(new Date().getTime()/1000.0);
 			oD.insert('statistics', [idProject, now, 'reset', oT.timer[idProject].seconds]);
 			$('#'+idProject).find('.timer').html('00 : 00 : 00');
 			oM.show('<p class="text-success">Project '+oT.timer[idProject].name+' Successfully reset.</p>');
@@ -137,51 +137,7 @@ function Timer(){
 	 */
 	this.registerSeconds = function(idProject, seconds){
 		oD.update('projects', {'time': seconds}, {'id': idProject});
-		now = new Date().getTime();
+		now = Math.round(new Date().getTime()/1000.0);
 		oD.insert('statistics', [idProject, now, 'stop', seconds]);
-	}
-
-	/**
-	 * Function for transform seconds in a string like 00 : 00 : 00
-	 * @param  {Int} seconds 
-	 * @return {String} The formated time
-	 */
-	this.getTimer = function(seconds){
-		var rest = seconds;
-		var result = '';
-		var nbHours = Math.floor(rest / 3600);
-		rest -= nbHours * 3600;
-		var nbMinutes = Math.floor(rest / 60);
-		rest -= nbMinutes * 60;
-		var nbSeconds = rest;
-
-		if (nbHours > 0)
-			result = oT.zeroFill(result+nbHours, 2) + ' : ';
-		else 
-			result = '00 : ';
-		if (nbMinutes > 0)
-			result = result + oT.zeroFill(nbMinutes, 2) + ' : ';
-		else 
-			result = result + '00 : ';
-		if (nbSeconds > 0)
-			result = result + oT.zeroFill(nbSeconds, 2);
-		else 
-			result = result + '00';
-
-		return result;
-	}
-
-	/**
-	 * Function for number formating (8 => 08)
-	 * @param  {Int} number 
-	 * @param  {Int} width  The number of 0 needed before the number
-	 * @return {String}  The formated number
-	 */
-	this.zeroFill = function(number, width){
-		width -= number.toString().length;
-		if(width > 0){
-			return new Array(width + (/\./.test( number ) ? 2 : 1) ).join( '0' ) + number;
-		}
-		return number + "";
 	}
 }
